@@ -62,6 +62,7 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CreateBasketHandler.cs" />
     <Compile Include="HttpHandler.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

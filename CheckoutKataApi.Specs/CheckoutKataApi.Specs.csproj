@@ -45,6 +45,12 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Basket.feature.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Basket.feature</DependentUpon>
+    </Compile>
+    <Compile Include="BasketSteps.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="WalkingSkeleton.feature.cs">
       <AutoGen>True</AutoGen>
@@ -55,6 +61,10 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="Basket.feature">
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+      <LastGenOutput>Basket.feature.cs</LastGenOutput>
+    </None>
     <None Include="packages.config" />
     <None Include="WalkingSkeleton.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
