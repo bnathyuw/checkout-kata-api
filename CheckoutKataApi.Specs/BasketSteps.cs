@@ -19,6 +19,18 @@ namespace CheckoutKataApi.Specs
             _basketUri = CreateBasket("");
         }
 
+        [When(@"I check my basket")]
+        public void WhenICheckMyBasket()
+        {
+            GetBasket(_basketUri);
+        }
+
+        [Then(@"the price should be (.*)")]
+        public void ThenThePriceShouldBe(int expectedPrice)
+        {
+            AssertPriceIsCorrect(expectedPrice);
+        }
+
         private Uri CreateBasket(string p)
         {
             var webRequest = WebRequest.Create("http://checkout-kata-api.local/baskets");
@@ -32,17 +44,15 @@ namespace CheckoutKataApi.Specs
             return new Uri(webResponse.GetResponseHeader("Location"));
         }
 
-        [When(@"I check my basket")]
-        public void WhenICheckMyBasket()
+        private void GetBasket(Uri basketUri)
         {
-            var webRequest = WebRequest.Create(_basketUri);
-            _webResponse = (HttpWebResponse)webRequest.GetResponse();
+            var webRequest = WebRequest.Create(basketUri);
+            _webResponse = (HttpWebResponse) webRequest.GetResponse();
 
             Assert.That(_webResponse.StatusCode, Is.EqualTo(HttpStatusCode.OK));
         }
-        
-        [Then(@"the price should be (.*)")]
-        public void ThenThePriceShouldBe(int expectedPrice)
+
+        private void AssertPriceIsCorrect(int expectedPrice)
         {
             var responseStream = _webResponse.GetResponseStream();
             var streamReader = new StreamReader(responseStream);
