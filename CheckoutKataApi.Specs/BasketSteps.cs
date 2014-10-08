@@ -31,7 +31,7 @@ namespace CheckoutKataApi.Specs
             AssertPriceIsCorrect(expectedPrice);
         }
 
-        private Uri CreateBasket(string p)
+        private Uri CreateBasket(string basketContents)
         {
             var webRequest = WebRequest.Create("http://checkout-kata-api.local/baskets");
             webRequest.Method = "POST";
@@ -55,11 +55,12 @@ namespace CheckoutKataApi.Specs
         private void AssertPriceIsCorrect(int expectedPrice)
         {
             var responseStream = _webResponse.GetResponseStream();
+            Assert.IsNotNull(responseStream, "responseStream");
             var streamReader = new StreamReader(responseStream);
             var body = streamReader.ReadToEnd();
 
-            JavaScriptSerializer serializer = new JavaScriptSerializer();
-            Basket basket = serializer.Deserialize<Basket>(body);
+            var serializer = new JavaScriptSerializer();
+            var basket = serializer.Deserialize<Basket>(body);
 
             Assert.That(basket.Price, Is.EqualTo(expectedPrice));
         }
