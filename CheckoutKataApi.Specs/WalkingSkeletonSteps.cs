@@ -1,4 +1,4 @@
-﻿using System.IO;
+﻿using System;
 using System.Net;
 using NUnit.Framework;
 using TechTalk.SpecFlow;
@@ -8,24 +8,21 @@ namespace CheckoutKataApi.Specs
     [Binding]
     public class WalkingSkeletonSteps
     {
-        private HttpWebResponse _webResponse;
+        private readonly Browser _browser = new Browser();
 
         [When(@"I make a request to the API")]
         public void WhenIMakeARequestToTheApi()
         {
-            var webRequest = WebRequest.Create("http://checkout-kata-api.local/");
-            _webResponse = (HttpWebResponse)webRequest.GetResponse();
+            _browser.Get(new Uri("http://checkout-kata-api.local/"));
         }
 
         [Then(@"I get a response")]
         public void ThenIGetAResponse()
         {
-            var responseStream = _webResponse.GetResponseStream();
-            var streamReader = new StreamReader(responseStream);
-            var response = streamReader.ReadToEnd();
+            _browser.AssertStatusCodeIs(HttpStatusCode.OK);
 
-            Assert.That(_webResponse.StatusCode, Is.EqualTo(HttpStatusCode.OK));
-            Assert.That(response, Is.EqualTo("welcome"));
+            var body = _browser.GetResponseBody();
+            Assert.That(body, Is.EqualTo("welcome"));
         }
     }
 }
