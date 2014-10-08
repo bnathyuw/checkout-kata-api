@@ -54,6 +54,7 @@
     </Compile>
     <Compile Include="BasketProcessing.cs" />
     <Compile Include="BasketSteps.cs" />
+    <Compile Include="Browser.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="WalkingSkeleton.feature.cs">
       <AutoGen>True</AutoGen>
