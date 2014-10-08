@@ -46,11 +46,13 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Basket.cs" />
     <Compile Include="Basket.feature.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Basket.feature</DependentUpon>
     </Compile>
+    <Compile Include="BasketProcessing.cs" />
     <Compile Include="BasketSteps.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="WalkingSkeleton.feature.cs">
