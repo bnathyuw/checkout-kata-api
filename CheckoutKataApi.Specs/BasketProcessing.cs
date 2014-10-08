@@ -12,23 +12,18 @@ namespace CheckoutKataApi.Specs
 
         public Uri CreateBasket(string basketContents)
         {
-            var webRequest = WebRequest.Create("http://checkout-kata-api.local/baskets");
-            webRequest.Method = "POST";
-            webRequest.ContentLength = 0;
-            var webResponse = (HttpWebResponse)webRequest.GetResponse();
+            Post(new Uri("http://checkout-kata-api.local/baskets"));
 
+            AssertStatusCodeIs(HttpStatusCode.Created);
 
-            Assert.That(webResponse.StatusCode, Is.EqualTo(HttpStatusCode.Created));
-
-            return new Uri(webResponse.GetResponseHeader("Location"));
+            return new Uri(_webResponse.GetResponseHeader("Location"));
         }
 
         public void GetBasket(Uri basketUri)
         {
-            var webRequest = WebRequest.Create(basketUri);
-            _webResponse = (HttpWebResponse) webRequest.GetResponse();
+            Get(basketUri);
 
-            Assert.That(_webResponse.StatusCode, Is.EqualTo(HttpStatusCode.OK));
+            AssertStatusCodeIs(HttpStatusCode.OK);
         }
 
         public void AssertPriceIsCorrect(int expectedPrice)
@@ -42,6 +37,25 @@ namespace CheckoutKataApi.Specs
             var basket = serializer.Deserialize<Basket>(body);
 
             Assert.That(basket.Price, Is.EqualTo(expectedPrice));
+        }
+
+        private void Get(Uri requestUri)
+        {
+            var webRequest = WebRequest.Create(requestUri);
+            _webResponse = (HttpWebResponse) webRequest.GetResponse();
+        }
+
+        private void AssertStatusCodeIs(HttpStatusCode httpStatusCode)
+        {
+            Assert.That(_webResponse.StatusCode, Is.EqualTo(httpStatusCode));
+        }
+
+        private void Post(Uri requestUri)
+        {
+            var webRequest = WebRequest.Create(requestUri);
+            webRequest.Method = "POST";
+            webRequest.ContentLength = 0;
+            _webResponse = (HttpWebResponse) webRequest.GetResponse();
         }
     }
 }
