@@ -35,11 +35,14 @@ namespace CheckoutKataApi.Specs
 
         public string GetResponseBody()
         {
-            var responseStream = _webResponse.GetResponseStream();
-            Assert.IsNotNull(responseStream, "responseStream");
-            var streamReader = new StreamReader(responseStream);
-            var body = streamReader.ReadToEnd();
-            return body;
+            using (var responseStream = _webResponse.GetResponseStream())
+            {
+                Assert.IsNotNull(responseStream, "responseStream");
+                using (var streamReader = new StreamReader(responseStream))
+                {
+                    return streamReader.ReadToEnd();
+                }
+            }
         }
     }
 }
