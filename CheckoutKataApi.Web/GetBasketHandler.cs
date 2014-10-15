@@ -15,9 +15,4 @@ namespace CheckoutKataApi.Web
 
         public bool IsReusable { get; private set; }
     }
-
-    public class Basket
-    {
-        public int Price { get; set; }
-    }
 }
