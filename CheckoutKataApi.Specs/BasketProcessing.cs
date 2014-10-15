@@ -12,7 +12,7 @@ namespace CheckoutKataApi.Specs
 
         public Uri CreateBasket(string basketContents)
         {
-            _browser.Post(new Uri("http://checkout-kata-api.local/baskets"));
+            _browser.Post(new Uri("http://checkout-kata-api.local/baskets"), basketContents);
 
             _browser.AssertStatusCodeIs(HttpStatusCode.Created);
 
@@ -28,7 +28,7 @@ namespace CheckoutKataApi.Specs
 
         public void AssertPriceIsCorrect(int expectedPrice)
         {
-            var body = _browser.GetResponseBody();
+            var body = _browser.ResponseBody;
 
             var serializer = new JavaScriptSerializer();
             var basket = serializer.Deserialize<Basket>(body);

@@ -8,19 +8,49 @@ namespace CheckoutKataApi.Specs
     public class Browser
     {
         private HttpWebResponse _webResponse;
+        private string _responseBody;
 
-        public void Post(Uri requestUri)
+        public string ResponseBody
+        {
+            get { return _responseBody; }
+        }
+
+        public void Post(Uri requestUri, string body)
         {
             var webRequest = WebRequest.Create(requestUri);
             webRequest.Method = "POST";
-            webRequest.ContentLength = 0;
+            webRequest.ContentLength = body.Length;
+            using (var requestStream = webRequest.GetRequestStream())
+            {
+                using (var streamWriter = new StreamWriter(requestStream))
+                {
+                    streamWriter.Write(body);
+                }
+            }
             _webResponse = (HttpWebResponse) webRequest.GetResponse();
+            _responseBody = ReadResponseBody(_webResponse);
+
+            Console.WriteLine(
+                "Method: {0} \nUri: {1} \n{2} \nBody: {3}",
+                webRequest.Method, webRequest.RequestUri, webRequest.Headers, body);
+
+            Console.WriteLine("StatusCode: {0} \n{1} \nBody: {2}",
+                _webResponse.StatusCode, _webResponse.Headers, ResponseBody);
         }
 
         public void Get(Uri requestUri)
         {
             var webRequest = WebRequest.Create(requestUri);
             _webResponse = (HttpWebResponse) webRequest.GetResponse();
+            _responseBody = ReadResponseBody(_webResponse);
+
+            Console.WriteLine(
+                "Method: {0} \nUri: {1} \n{2}",
+                webRequest.Method, webRequest.RequestUri, webRequest.Headers);
+
+            Console.WriteLine(
+                "StatusCode: {0} \n{1} \nBody: {2}",
+                _webResponse.StatusCode, _webResponse.Headers, ResponseBody);
         }
 
         public void AssertStatusCodeIs(HttpStatusCode httpStatusCode)
@@ -33,9 +63,9 @@ namespace CheckoutKataApi.Specs
             return new Uri(_webResponse.GetResponseHeader("Location"));
         }
 
-        public string GetResponseBody()
+        private string ReadResponseBody(WebResponse httpWebResponse)
         {
-            using (var responseStream = _webResponse.GetResponseStream())
+            using (var responseStream = httpWebResponse.GetResponseStream())
             {
                 Assert.IsNotNull(responseStream, "responseStream");
                 using (var streamReader = new StreamReader(responseStream))

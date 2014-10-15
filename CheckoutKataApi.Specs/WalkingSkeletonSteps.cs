@@ -21,7 +21,7 @@ namespace CheckoutKataApi.Specs
         {
             _browser.AssertStatusCodeIs(HttpStatusCode.OK);
 
-            var body = _browser.GetResponseBody();
+            var body = _browser.ResponseBody;
             Assert.That(body, Is.EqualTo("welcome"));
         }
     }
