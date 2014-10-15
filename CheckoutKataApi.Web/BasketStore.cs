@@ -2,7 +2,7 @@
 {
     public class BasketStore
     {
-        public void Add(Basket basket)
+        public int Add(Basket basket)
         {
             throw new System.NotImplementedException();
         }

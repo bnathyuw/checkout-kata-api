@@ -62,6 +62,8 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Basket.cs" />
+    <Compile Include="BasketStore.cs" />
     <Compile Include="CreateBasketHandler.cs" />
     <Compile Include="GetBasketHandler.cs" />
     <Compile Include="HttpHandler.cs" />
