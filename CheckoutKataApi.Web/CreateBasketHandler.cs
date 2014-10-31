@@ -1,4 +1,5 @@
-﻿using System.Net;
+﻿using System.IO;
+using System.Net;
 using System.Web;
 
 namespace CheckoutKataApi.Web
@@ -8,12 +9,21 @@ namespace CheckoutKataApi.Web
         public void ProcessRequest(HttpContext context)
         {
             var basketStore = new BasketStore();
-            Basket basket = new Basket();
+            using (var stream = context.Request.InputStream)
+            {
+                using (var streamReader = new StreamReader(stream))
+                {
+                    var items = streamReader.ReadToEnd();
+                    var price = new PriceCalculator().GetPriceOf(items);
+                    
+                    var basket = new Basket {Price = price};
 
-            var basketId = basketStore.Add(basket);
+                    var basketId = basketStore.Add(basket);
 
-            context.Response.StatusCode = (int)HttpStatusCode.Created;
-            context.Response.RedirectLocation = "http://checkout-kata-api.local/baskets/" + basketId;
+                    context.Response.StatusCode = (int)HttpStatusCode.Created;
+                    context.Response.RedirectLocation = "http://checkout-kata-api.local/baskets/" + basketId;
+                }
+            }
         }
 
         public bool IsReusable { get; private set; }

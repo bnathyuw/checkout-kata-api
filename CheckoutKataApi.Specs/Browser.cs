@@ -31,10 +31,10 @@ namespace CheckoutKataApi.Specs
             _responseBody = ReadResponseBody(_webResponse);
 
             Console.WriteLine(
-                "Method: {0} \nUri: {1} \n{2} \nBody: {3}",
+                "Method: {0} \nUri: {1} \n{2} \nBody: {3}\n=====",
                 webRequest.Method, webRequest.RequestUri, webRequest.Headers, body);
 
-            Console.WriteLine("StatusCode: {0} \n{1} \nBody: {2}",
+            Console.WriteLine("StatusCode: {0} \n{1} \nBody: {2}\n=====",
                 _webResponse.StatusCode, _webResponse.Headers, ResponseBody);
         }
 
@@ -45,11 +45,11 @@ namespace CheckoutKataApi.Specs
             _responseBody = ReadResponseBody(_webResponse);
 
             Console.WriteLine(
-                "Method: {0} \nUri: {1} \n{2}",
+                "Method: {0} \nUri: {1} \n{2}\n=====",
                 webRequest.Method, webRequest.RequestUri, webRequest.Headers);
 
             Console.WriteLine(
-                "StatusCode: {0} \n{1} \nBody: {2}",
+                "StatusCode: {0} \n{1} \nBody: {2}\n=====",
                 _webResponse.StatusCode, _webResponse.Headers, ResponseBody);
         }
 

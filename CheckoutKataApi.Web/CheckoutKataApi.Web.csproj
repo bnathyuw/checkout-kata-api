@@ -67,6 +67,7 @@
     <Compile Include="CreateBasketHandler.cs" />
     <Compile Include="GetBasketHandler.cs" />
     <Compile Include="HttpHandler.cs" />
+    <Compile Include="PriceCalculator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
