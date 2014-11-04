@@ -12,3 +12,13 @@ Scenario: Single item in basket
 	Given I have item A in my basket
 	When I check my basket
 	Then the price should be 50
+
+Scenario: Lots of undiscounted items in basket
+	Given I have items ABCD in my basket
+	When I check my basket
+	Then the price should be 115
+
+Scenario: Several discounts in basket
+	Given I have items AACBAADBAA in my basket
+	When I check my basket
+	Then the price should be 340
