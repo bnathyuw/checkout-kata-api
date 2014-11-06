@@ -14,7 +14,8 @@ namespace CheckoutKataApi.Tests
         public void Should_return_expected_price(string items, int expectedPrice)
         {
             var priceCalculator = new PriceCalculator();
-            Assert.That(priceCalculator.GetPriceOf(items), Is.EqualTo(expectedPrice));
+            var basketItems = new BasketItems(items);
+            Assert.That(priceCalculator.GetPriceOf(basketItems), Is.EqualTo(expectedPrice));
         }
 
         [TestCase("AAA", 130)]
@@ -22,7 +23,8 @@ namespace CheckoutKataApi.Tests
         public void Should_return_expected_discount_price(string items, int expectedPrice)
         {
             var priceCalculator = new PriceCalculator();
-            Assert.That(priceCalculator.GetPriceOf(items), Is.EqualTo(expectedPrice));
+            var basketItems = new BasketItems(items);
+            Assert.That(priceCalculator.GetPriceOf(basketItems), Is.EqualTo(expectedPrice));
         }
     }
 }

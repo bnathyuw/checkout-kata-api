@@ -14,7 +14,8 @@ namespace CheckoutKataApi.Web
                 using (var streamReader = new StreamReader(stream))
                 {
                     var items = streamReader.ReadToEnd();
-                    var price = new PriceCalculator().GetPriceOf(items);
+                    var basketItems = new BasketItems(items);
+                    var price = new PriceCalculator().GetPriceOf(basketItems);
                     
                     var basket = new Basket {Price = price};
 

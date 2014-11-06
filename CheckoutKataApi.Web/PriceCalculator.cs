@@ -2,14 +2,34 @@
 
 namespace CheckoutKataApi.Web
 {
+    public class BasketItems
+    {
+        private readonly string _items;
+
+        public BasketItems(string items)
+        {
+            _items = items;
+        }
+
+        public int ItemCount(char itemCode)
+        {
+            return _items.Count(item => item == itemCode);
+        }
+    }
+
     public class PriceCalculator
     {
-        public int GetPriceOf(string items)
+        public int GetPriceOf(BasketItems basketItems)
         {
-            return items.Count(item => item == 'A')*50 - (items.Count(item => item == 'A')/3)*20 +
-                   items.Count(item => item == 'B')*30 - (items.Count(item => item == 'B')/2)*15 +
-                   items.Count(item => item == 'C')*20 +
-                   items.Count(item => item == 'D')*15;
+            var itemACount = basketItems.ItemCount('A');
+            var itemBCount = basketItems.ItemCount('B');
+            var itemCCount = basketItems.ItemCount('C');
+            var itemDCount = basketItems.ItemCount('D');
+            
+            return itemACount*50 - (itemACount/3)*20 +
+                   itemBCount*30 - (itemBCount/2)*15 +
+                   itemCCount*20 +
+                   itemDCount*15;
         }
     }
 }
